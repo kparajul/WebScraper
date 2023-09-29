@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class HT implements java.io.Serializable {
     String document;
+    int totalsize = 0;
     ArrayList<String> arr=new ArrayList<>();
     //                Scanner sc = new Scanner(document);
 //           while(sc.hasNext()) {
@@ -18,16 +19,17 @@ public class HT implements java.io.Serializable {
     }
     Node[] table = new Node[8]; // always a power of 2
     int size = 0;
-    boolean contains(String key) {
+    public int contains(String key) {
         int h = key.hashCode();
         int i = h & (table.length - 1);
         for (Node e = table[i]; e != null; e = e.next) {
             if (key.equals(e.key))
-                return true;
+                return e.frequency;
         }
-        return false;
+        return table[i].frequency;
     }
     void add(String key) {
+        totalsize +=1;
         int h = key.hashCode();
         int i = h & (table.length - 1);
         for (Node e = table[i]; e != null; e = e.next) {
@@ -117,6 +119,10 @@ public class HT implements java.io.Serializable {
                 this.add(e.key);
             }
         }
+    }
+
+    public int getTotalsize(){
+        return totalsize;
     }
 
     public static void main(String[] args) {
